@@ -3,6 +3,8 @@ body
   background: #FFEFD5;
 }
 
+
+// стилі форми
 * {box-sizing: border-box;}
 .search-form {
   position: relative;
@@ -47,3 +49,42 @@ body
   content: "😋";
   font-size: 30px;
 }
+// кінець стилів форми
+
+.gallery
+{
+  width: 1200px;
+  border: #896b1f 1px solid;
+
+  margin: 0 auto;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  // align-items: center;
+  justify-content: space-around;
+}
+
+.image
+{
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px 0px rgba(152, 158, 159, 0.999);
+}
+
+
+// дів для описів 
+.info
+{
+font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+
+}
+// описи
+.info-item
+{
+    width: 60px;
+  font-size: 10px;
+  font-style: normal;
+
+}
+// npm start
