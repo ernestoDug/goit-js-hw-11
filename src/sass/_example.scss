@@ -2,7 +2,10 @@ body
 {
   background: #FFEFD5;
 }
-
+.hh{
+  position: fixed;
+  top: 0;
+}
 
 // стилі форми
 * {box-sizing: border-box;}
@@ -54,13 +57,10 @@ body
 .gallery
 {
   width: 1200px;
-  border: #896b1f 1px solid;
-
   margin: 0 auto;
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
-  // align-items: center;
   justify-content: space-around;
 }
 
