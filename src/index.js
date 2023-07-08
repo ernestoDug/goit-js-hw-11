@@ -1,16 +1,43 @@
+// loader 
+// https://cssloaders.github.io/
+
 import axios, { isCancel, AxiosError } from 'axios';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-import { fetchImages } from './fetchImages.js';
+import { fetchImages, loaderVar } from './fetchImages.js';
 
 import {markUper} from './markUper.js';
+
+// Описаний в документації
+import SimpleLightbox from "simplelightbox";
+// Додатковий імпорт стилів
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const formVar = document.querySelector('.search-form');
 
 formVar.addEventListener('submit', submiterF);
 
 const galeryVar = document.querySelector(".gallery");
+
+// ************************************?????????????????????????????????????/
+ // * застосовую функцію бібліотеки
+   let gallery =  new SimpleLightbox(".gallery a", {
+    navText: ["<<", ">>"],
+    captionsData: "alt",
+    captionPosition: "",
+    captionDelay: 250,
+    closeText: "X",
+    animationSpeed: 300,
+    download: "true",
+  });
+// })();
+
+// * використовую шаблон з бібліотеки
+// }
+
+// ******************************end????????????????????????????
+
 let  inputValue = null;
 
 // обсервер
@@ -30,14 +57,16 @@ let currentPage = 1;
 
 // функція обробки сабміту
 function submiterF(event) {
-  event.preventDefault();
-  inputValue = event.currentTarget.searchQuery.value;
-  if(inputValue === "" || inputValue === " ")
-  {
-    Notify.warning(`🤗 Будь ласка введіть свій запит`);
-    return;
-  }
-  galeryVar.innerHTML = "";
+    event.preventDefault();
+    
+    inputValue = event.currentTarget.searchQuery.value;
+    if(inputValue === "" || inputValue === " ")
+    {
+      Notify.warning(`🤗 Будь ласка введіть свій запит`);
+      return;
+    }
+    galeryVar.innerHTML = "";
+    // currentPage = 1;
 
   // console.log(inputValue);
   // виклик функції запиту
@@ -45,18 +74,19 @@ function submiterF(event) {
   .then(async resp => {
     const images =await markUper(resp);
     galeryVar.insertAdjacentHTML('beforeEnd',  images);
-      observer.observe(targetForObservVar);
-
+    observer.observe(targetForObservVar);
   })
-  
   // console.log(event.currentTarget);
   // console.log(event.currentTarget.searchQuery.value);
+
+  // gallery.refresh();?????????????????????????????????????????????????????????????????
 }
 
+// refresh();
 
 function onObserv (entries, observer) {
   entries.forEach((entry) => {
-      if(entry.isIntersecting)
+    if(entry.isIntersecting)
       {
         console.log("keyky");
         currentPage +=1;
@@ -75,6 +105,7 @@ function onObserv (entries, observer) {
 }
 })
 }
+
 
 
 

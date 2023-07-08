@@ -9,7 +9,7 @@ export function markUper(array) {
     views,
         comments,
     downloads
-  }) => `<div class="photo-card">
+  }) => `<div class="photo-card">  <a href="${largeImageURL}">
   <img class= "image" src="${webformatURL}" alt="${tags}" loading="lazy" width = 350 />
   <div class="info">
     <p class="info-item">

@@ -1,17 +1,19 @@
 import axios, { isCancel, AxiosError } from 'axios';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import {inputValue, submiterF} from './index.js';
+import {inputValue, submiterF } from './index.js';
 
 
 const MY_KEY = "28539247-0afb9c376c93f2bc11eaacc3c";
 const BASE_URL = "https://pixabay.com/api";
 
+const loaderVar = document.querySelector(".loader");
+
 async function fetchImages(inputValue, page=1) {
   
   // запит
-  try {
-  
+  loaderVar.removeAttribute("hidden");
+ 
     const responseImg  = await axios
       .get(`${BASE_URL}/?key=${MY_KEY}&q=${inputValue}`,
     {
@@ -28,18 +30,19 @@ async function fetchImages(inputValue, page=1) {
       {
         Notify.warning(`🥺 Шкода, світлин не знайдено, змініть запит, спробуйте ще`);
       }
-      console.log(responseImg,"респ");
-      console.log(responseImg.data,"дат");
-      console.log(responseImg.data.hits,"*****хит*****");
+      // console.log(responseImg,"респ");
+      // console.log(responseImg.data,"дат");
+      // console.log(responseImg.data.hits,"*****хит*****");
+      loaderVar.setAttribute("hidden", "hidden" );
 
 
       return responseImg.data.hits;
-    }  
-    catch (error) {
-        Notify.warning(`😒 Сталася помилка завантаженя, спробуйте ще`);
-        // **********************************************************************
-      }      
+
+    // catch (error) {
+    //     Notify.warning(`😒 Сталася помилка завантаженя, спробуйте ще`);
+    //     // **********************************************************************
+    //   }      
        
       }
 
-export {fetchImages}
+export {fetchImages, loaderVar}
