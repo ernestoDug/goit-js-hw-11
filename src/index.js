@@ -59,6 +59,14 @@ function submiterF(event) {
     galeryVar.insertAdjacentHTML('beforeEnd', images);
     //  обсервера почина. спостерігати таргет
     observer.observe(targetForObservVar);
+    const { height: cardHeight } = document
+            .querySelector('.gallery')
+            .firstElementChild.getBoundingClientRect();
+
+          window.scrollBy({
+            top: cardHeight * 2,
+            behavior: 'smooth',
+          });
   });
 }
 // функція обервера
@@ -79,15 +87,7 @@ function onObserv(entries, observer) {
       fetchImages(inputValue, currentPage)
         .then(data => {
           galeryVar.insertAdjacentHTML('beforeend', markUper(data));
-          const { height: cardHeight } = document
-            .querySelector('.gallery')
-            .firstElementChild.getBoundingClientRect();
-
-          window.scrollBy({
-            top: cardHeight * 2,
-            behavior: 'smooth',
-          });
-          // метод бібліотеки  SimpleLightbox руйнування лайтбоксу
+                    // метод бібліотеки  SimpleLightbox руйнування лайтбоксу
           gallery.refresh();
 
           //  ****************************/*/*/*/*/
