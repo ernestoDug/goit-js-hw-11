@@ -4,6 +4,11 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { inputValue, observer, targetForObservVar } from './index.js';
 
+// Описаний в документації
+import SimpleLightbox from 'simplelightbox';
+// Додатковий імпорт стилів
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 const MY_KEY = '28539247-0afb9c376c93f2bc11eaacc3c';
 const BASE_URL = 'https://pixabay.com/api';
 

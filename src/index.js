@@ -59,14 +59,6 @@ function submiterF(event) {
     galeryVar.insertAdjacentHTML('beforeEnd', images);
     //  обсервера почина. спостерігати таргет
     observer.observe(targetForObservVar);
-    const { height: cardHeight } = document
-            .querySelector('.gallery')
-            .firstElementChild.getBoundingClientRect();
-
-          window.scrollBy({
-            top: cardHeight * 2,
-            behavior: 'smooth',
-          });
   });
 }
 // функція обервера
@@ -87,14 +79,22 @@ function onObserv(entries, observer) {
       fetchImages(inputValue, currentPage)
         .then(data => {
           galeryVar.insertAdjacentHTML('beforeend', markUper(data));
-                    // метод бібліотеки  SimpleLightbox руйнування лайтбоксу
+          const { height: cardHeight } = document
+            .querySelector('.gallery')
+            .firstElementChild.getBoundingClientRect();
+
+          window.scrollBy({
+            top: cardHeight * 2,
+            behavior: 'smooth',
+          });
+          // метод бібліотеки  SimpleLightbox руйнування лайтбоксу
           gallery.refresh();
 
           //  ****************************/*/*/*/*/
           // console.log(data.views, "tot")
           // ставимо умову щоб вимикати обсервер
           if (data.page === data.total) {
-            observer.unobserve(targetForObservVar);
+                       observer.unobserve(targetForObservVar);
           }
           // Notify.warning(`😒 Нажаль Ви досягли кінця пошуку`);
         })
