@@ -34,8 +34,6 @@ async function fetchImages(inputValue, page = 1) {
       `🥺 Шкода, світлин не знайдено, змініть запит, спробуйте ще`
     );
   }
-  console.log(responseImg, 'респ');
-  // console.log(responseImg.data,"дат");
   // console.log(responseImg.data.hits,"*****хит*****");
   loaderVar.setAttribute('hidden', 'hidden');
 
@@ -45,11 +43,6 @@ async function fetchImages(inputValue, page = 1) {
   }
 
   return responseImg.data.hits;
-
-  // catch (error) {
-  //     Notify.warning(`😒 Сталася помилка завантаженя, спробуйте ще`);
-  //     // **********************************************************************
-  //   }
 }
 
 export { fetchImages, loaderVar };

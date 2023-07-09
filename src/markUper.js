@@ -1,5 +1,9 @@
-// функція малівник карток
+// Описаний в документації
+import SimpleLightbox from 'simplelightbox';
+// Додатковий імпорт стилів
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
+// функція малівник карток
 export function markUper(array) {
   return array
     .map(
