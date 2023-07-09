@@ -20,23 +20,8 @@ formVar.addEventListener('submit', submiterF);
 
 const galeryVar = document.querySelector(".gallery");
 
-// ************************************?????????????????????????????????????/
- // * застосовую функцію бібліотеки
-   let gallery =  new SimpleLightbox(".gallery a", {
-    navText: ["<<", ">>"],
-    captionsData: "alt",
-    captionPosition: "",
-    captionDelay: 250,
-    closeText: "X",
-    animationSpeed: 300,
-    download: "true",
-  });
-// })();
 
-// * використовую шаблон з бібліотеки
-// }
 
-// ******************************end????????????????????????????
 
 let  inputValue = null;
 
@@ -45,7 +30,7 @@ let options = {
   root: null,
   // тобто буде за замовчування слухати MDN
   rootMargin: '200px',
-  // threshold: 1.0
+  threshold: 1.0
 }
 
 let observer = new IntersectionObserver(onObserv, options);
@@ -73,33 +58,61 @@ function submiterF(event) {
   fetchImages(inputValue)
   .then(async resp => {
     const images =await markUper(resp);
+    console.log(resp, "fdsfsfwefeweeeeeeeeeeeeeeeeeeeeeeeeeeeeee"); 
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+    // Notify.warning(`Ви знайшли ${totalHits} світлин`); ******************************
+///////////////////////////////////////////////////////////////////////////////////////////////
+
     galeryVar.insertAdjacentHTML('beforeEnd',  images);
     observer.observe(targetForObservVar);
-  })
-  // console.log(event.currentTarget);
-  // console.log(event.currentTarget.searchQuery.value);
+    
+})
 
-  // gallery.refresh();?????????????????????????????????????????????????????????????????
 }
 
-// refresh();
-
-function onObserv (entries, observer) {
+ function onObserv (entries, observer) {
+  
+   let gallery = new SimpleLightbox('.gallery a', {
+     navText: ["💫", "💫"],
+     captionsData: "alt",
+     captionPosition: "",
+     captionDelay: 250,
+     closeText: "🙅‍♀️",
+     animationSpeed: 300,
+     download: "true",
+   });
   entries.forEach((entry) => {
     if(entry.isIntersecting)
       {
-        console.log("keyky");
+        console.log("обс");
         currentPage +=1;
-                fetchImages(inputValue, currentPage).then((data) => {galeryVar.insertAdjacentHTML('beforeend', markUper(data));
+                fetchImages(inputValue, currentPage)
+                .then((data) => {galeryVar.insertAdjacentHTML('beforeend', markUper(data));
+                // метод бібліотеки уйнування лайтбоксу
+                gallery.refresh();
+
+// * застосовую функцію бібліотеки
+    
+    
+
+
+
+
+            
+            //  ****************************/*/*/*/*/
 // ставимо умову щоб вимикати обсервер
-// if(page !== total)
-// // ойя тотал пейдж може інашке називтиася треба в відповіді дивтись у мене в кошаках я її не знайшов
+// console.log(data.views, "tot")
+// if(currentPage === data.total)
+// // // ойя тотал пейдж може інашке називтиася треба в відповіді дивтись у мене в кошаках я її не знайшов
 // {
-//   // вимикання обсервера методом його ві вимикає тільки слідкування за тим дівчиком а не за всим за всим є інший метод
+// //   // вимикання обсервера методом його ві вимикає тільки слідкування за тим дівчиком а не за всим за всим є інший метод
+// Notify.warning(`😒 888888888888888888888888888888888888888888888`);
 //   observer.unobserve(targetForObservVar)}
 })
+
 .catch((error) => {
-  Notify.warning(`😒 Сталася помилка, спробуйте ще...`);
   console.log(error)
 })
 }
@@ -115,5 +128,4 @@ function onObserv (entries, observer) {
 
 
 
-
-export { inputValue, targetForObservVar };
+export { inputValue, targetForObservVar, galeryVar };

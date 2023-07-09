@@ -1,15 +1,17 @@
 // функція малівник карток
 
 export function markUper(array) {
-  return array.map(({
+ return array.map(({
     webformatURL,
     largeImageURL,
     tags,
     likes,
     views,
         comments,
-    downloads
-  }) => `<div class="photo-card">  <a href="${largeImageURL}">
+    downloads,
+    totalHits,
+  }) => 
+    `<div class="photo-card">  <a href="${largeImageURL}">
   <img class= "image" src="${webformatURL}" alt="${tags}" loading="lazy" width = 350 />
   <div class="info">
     <p class="info-item">
@@ -27,3 +29,5 @@ export function markUper(array) {
   </div>
 </div>`).join('');
 }
+
+

@@ -1,7 +1,13 @@
 import axios, { isCancel, AxiosError } from 'axios';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import {inputValue, submiterF } from './index.js';
+
+import {inputValue } from './index.js';
+
+// // Описаний в документації
+// import SimpleLightbox from "simplelightbox";
+// // Додатковий імпорт стилів
+// import "simplelightbox/dist/simple-lightbox.min.css";
 
 
 const MY_KEY = "28539247-0afb9c376c93f2bc11eaacc3c";
@@ -13,7 +19,6 @@ async function fetchImages(inputValue, page=1) {
   
   // запит
   loaderVar.removeAttribute("hidden");
- 
     const responseImg  = await axios
       .get(`${BASE_URL}/?key=${MY_KEY}&q=${inputValue}`,
     {
@@ -25,18 +30,17 @@ async function fetchImages(inputValue, page=1) {
           per_page: 40,
           page: 1,
         }
-      })
+              })
       if (responseImg.data.hits.length ===0)
       {
         Notify.warning(`🥺 Шкода, світлин не знайдено, змініть запит, спробуйте ще`);
       }
-      // console.log(responseImg,"респ");
+      console.log(responseImg,"респ");
       // console.log(responseImg.data,"дат");
       // console.log(responseImg.data.hits,"*****хит*****");
+
       loaderVar.setAttribute("hidden", "hidden" );
-
-
-      return responseImg.data.hits;
+           return responseImg.data.hits;
 
     // catch (error) {
     //     Notify.warning(`😒 Сталася помилка завантаженя, спробуйте ще`);
@@ -45,4 +49,4 @@ async function fetchImages(inputValue, page=1) {
        
       }
 
-export {fetchImages, loaderVar}
+export {fetchImages, loaderVar }
