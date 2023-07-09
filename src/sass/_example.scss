@@ -1,19 +1,20 @@
-body
-{
-  background: #FFEFD5;
+body {
+  background: #ffefd5;
 }
 
-// стилі форми
-* {box-sizing: border-box;}
+// стилі форми**************************************
+* {
+  box-sizing: border-box;
+}
 .search-form {
   position: relative;
   width: 300px;
   margin: 0 auto;
-  background:#F5DEB3;
+  background: #f5deb3;
   border-radius: 20px;
-
 }
-.finders, button {
+.finders,
+button {
   border: none;
   outline: none;
   background: transparent;
@@ -32,26 +33,23 @@ body
   cursor: pointer;
 }
 .textBtn:before {
-  content: "😀";
+  content: '😀';
   font-size: 25px;
 }
 
-.search-form:hover
-{
-  
+.search-form:hover {
   background: #f8dd84;
   border: #896b1f 1px solid;
 }
 
-.textBtn:hover:before
-{
-  content: "😋";
+.textBtn:hover:before {
+  content: '😋';
   font-size: 30px;
 }
 // кінець стилів форми
 
-.gallery
-{
+// *****************************************************галерейні стилі
+.gallery {
   width: 1200px;
   margin: 0 auto;
   margin-top: 10px;
@@ -60,39 +58,31 @@ body
   justify-content: space-around;
 }
 
-.image
-{
+.image {
   border-radius: 5px;
   box-shadow: 4px 4px 8px 0px rgba(152, 158, 159, 0.999);
 }
 
-
-// дів для описів 
-.info
-{
-font-size: 12px;
+// дів для описів
+.info {
+  font-size: 12px;
   display: flex;
   justify-content: space-between;
-
 }
 // описи
-.info-item
-{
-    width: 60px;
+.info-item {
+  width: 60px;
   font-size: 10px;
   font-style: normal;
-
 }
 
-// обгортка фрми
-.slick
-{
+// обгортка форми
+.slick {
   position: sticky;
   top: 0;
 }
 
 // *************************************лоадер
-
 
 .loader {
   margin: auto;
@@ -109,7 +99,7 @@ font-size: 12px;
 }
 .loader:after,
 .loader:before {
-  content: "";
+  content: '';
   border-radius: 100%;
   width: 35px;
   height: 35px;
@@ -138,9 +128,5 @@ font-size: 12px;
     transform: rotate(-360deg) scale(0.4);
   }
 }
-      
-
-
 
 // npm start
-
