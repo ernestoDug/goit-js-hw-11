@@ -23,6 +23,7 @@ formVar.addEventListener('submit', submiterF);
 const galeryVar = document.querySelector('.gallery');
 let inputValue = null;
 
+
 // обсервер параметри
 let options = {
   root: null,
@@ -36,6 +37,7 @@ let observer = new IntersectionObserver(onObserv, options);
 const targetForObservVar = document.querySelector('.js-oserverTarget');
 // console.log(targetForObservVar);
 let currentPage = 1;
+
 
 // функція обробки сабміту
 function submiterF(event) {
@@ -52,7 +54,7 @@ function submiterF(event) {
 
   // виклик функції запиту
   fetchImages(inputValue)
-    .then(async resp => {
+      .then(async resp => {
       // виклик функції малівника
       const images = await markUper(resp);
       galeryVar.insertAdjacentHTML('beforeEnd', images);
@@ -64,41 +66,50 @@ function submiterF(event) {
     );
 }
 // функція обсервера
-async function onObserv(entries, observer) {
-  try {
-    let gallery = new SimpleLightbox('.gallery a', {
-      navText: ['💫', '💫'],
-      captionsData: 'alt',
-      captionPosition: '',
-      captionDelay: 250,
-      closeText: '🙅‍♀️',
-      animationSpeed: 300,
-      download: 'true',
-    });
-    const entr = await entries.forEach(entry => {
-      if (entry.isIntersecting) {
+function onObserv(entries, observer) {
+  
+  let gallery = new SimpleLightbox('.gallery a', {
+    navText: ['💫', '💫'],
+    captionsData: 'alt',
+    captionPosition: '',
+    captionDelay: 250,
+    closeText: '🙅‍♀️',
+    animationSpeed: 300,
+    download: 'true',
+  });
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      currentPage += 1;
+      fetchImages(inputValue, currentPage)
+      .then(data => {
+        galeryVar.insertAdjacentHTML('beforeend', markUper(data));
         // console.log('обс', entry);
-        currentPage += 1;
-        fetchImages(inputValue, currentPage)
-          .then(data => {
-            galeryVar.insertAdjacentHTML('beforeend', markUper(data));
-            // метод бібліотеки руйнування лайтбоксу
-            gallery.refresh();
-            // ставимо умову щоб вимикати обсервер
-            // console.log(data.views, "tot")
-            if (data.page === data.total) {
-              // //   // вимикання обсервера методом його ві вимикає тільки слідкування за тим дівчиком а не за всим за всим є інший метод
-              observer.unobserve(targetForObservVar);
-            }
-          })
-          .catch(error =>
-            Notify.warning(`😒 Сталася помилка завантаженя спробуйте ще`)
+        // плавний скрол
+        const { height: cardHeight } = document
+        .querySelector(".gallery")
+        .firstElementChild.getBoundingClientRect();
+        
+        window.scrollBy({
+          top: cardHeight * 2,
+          behavior: "smooth",
+        });
+        // метод бібліотеки руйнування лайтбоксу
+        gallery.refresh();  
+
+          // ставимо умову щоб вимикати обсервер
+          // console.log(data.views, "tot")
+          if (data.page === data.total) {
+            // //   // вимикання обсервера методом його ві вимикає тільки слідкування за тим дівчиком а не за всим за всим є інший метод
+            observer.unobserve(targetForObservVar);
+          }
+        })
+        .catch(error =>
+          Notify.warning(`😒 Сталася помилка завантаженя спробуйте ще`)
           );
-      }
-    });
-  } catch (error) {
-    Notify.warning(`😒 Сталася помилка завантаженя, спробуйте ще`);
+        } 
+      });
+    
   }
-}
+
 
 export { inputValue, targetForObservVar, galeryVar, observer };

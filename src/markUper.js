@@ -18,7 +18,7 @@ export function markUper(array) {
         totalHits,
       }) =>
         `<div class="photo-card">  <a href="${largeImageURL}">
-  <img class= "image" src="${webformatURL}" alt="${tags}" loading="lazy" width = 350 />
+  <img class= "image" height = 200 src="${webformatURL}" alt="${tags}" loading="lazy" width = 350 />
   <div class="info">
     <p class="info-item">
       <b>Likes 💗 ${likes} </b>
