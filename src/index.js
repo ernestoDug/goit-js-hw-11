@@ -23,7 +23,6 @@ formVar.addEventListener('submit', submiterF);
 const galeryVar = document.querySelector('.gallery');
 let inputValue = null;
 
-
 // обсервер параметри
 let options = {
   root: null,
@@ -31,18 +30,17 @@ let options = {
   threshold: 1.0,
 };
 // екзмемпляр  обзервера
+let currentPage = 1;
 let observer = new IntersectionObserver(onObserv, options);
 
 // для таргета обсервера********************************************
 const targetForObservVar = document.querySelector('.js-oserverTarget');
 // console.log(targetForObservVar);
-let currentPage = 1;
-
 
 // функція обробки сабміту
-function submiterF(event) {
-  event.preventDefault();
 
+async function submiterF(event) {
+  event.preventDefault();
   // перверіка на маячню у вводі
   inputValue = event.currentTarget.searchQuery.value;
   if (inputValue === '' || inputValue === ' ') {
@@ -53,8 +51,8 @@ function submiterF(event) {
   // console.log(inputValue);
 
   // виклик функції запиту
-  fetchImages(inputValue)
-      .then(async resp => {
+  const fetch = await fetchImages(inputValue, currentPage)
+    .then(async resp => {
       // виклик функції малівника
       const images = await markUper(resp);
       galeryVar.insertAdjacentHTML('beforeEnd', images);
@@ -64,10 +62,10 @@ function submiterF(event) {
     .catch(error =>
       Notify.warning(`😒 Сталася помилка завантаженя, спробуйте ще`)
     );
+  //  formVar.reset();
 }
 // функція обсервера
-function onObserv(entries, observer) {
-  
+async function onObserv(entries, observer) {
   let gallery = new SimpleLightbox('.gallery a', {
     navText: ['💫', '💫'],
     captionsData: 'alt',
@@ -77,39 +75,37 @@ function onObserv(entries, observer) {
     animationSpeed: 300,
     download: 'true',
   });
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      currentPage += 1;
-      fetchImages(inputValue, currentPage)
-      .then(data => {
-        galeryVar.insertAdjacentHTML('beforeend', markUper(data));
-        // console.log('обс', entry);
-        // плавний скрол
-        const { height: cardHeight } = document
-        .querySelector(".gallery")
-        .firstElementChild.getBoundingClientRect();
-        
-        window.scrollBy({
-          top: cardHeight * 2,
-          behavior: "smooth",
-        });
-        // метод бібліотеки руйнування лайтбоксу
-        gallery.refresh();  
+  try {
+    const entry = await entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        currentPage += 1;
+        fetchImages(inputValue, currentPage)
+          .then(async data => {
+            galeryVar.insertAdjacentHTML('beforeend', markUper(data));
+            // плавний скрол
+            const { height: cardHeight } = document
+              .querySelector('.gallery')
+              .firstElementChild.getBoundingClientRect();
 
-          // ставимо умову щоб вимикати обсервер
-          // console.log(data.views, "tot")
-          if (data.page === data.total) {
-            // //   // вимикання обсервера методом його ві вимикає тільки слідкування за тим дівчиком а не за всим за всим є інший метод
-            observer.unobserve(targetForObservVar);
-          }
-        })
-        .catch(error =>
-          Notify.warning(`😒 Сталася помилка завантаженя спробуйте ще`)
-          );
-        } 
-      });
-    
+            window.scrollBy({
+              top: cardHeight * 2,
+              behavior: 'smooth',
+            });
+            // метод бібліотеки руйнування лайтбоксу
+            gallery.refresh();
+            // console.log('обс', inputValue, currentPage, "555555", data[1]);
+
+            // ставимо умову щоб вимикати обсервер
+            if (currentPage === data[1]) {
+              observer.unobserve(targetForObservVar);
+            }
+          })
+          .catch(error => Notify.warning(`😒 Сталася помилка !!!!!!!!!!!!!!`));
+      }
+    });
+  } catch (error) {
+    Notify.warning(`😒 Сталася помилка повторного запиту`);
   }
+}
 
-
-export { inputValue, targetForObservVar, galeryVar, observer };
+export { inputValue, targetForObservVar, galeryVar, observer, currentPage };

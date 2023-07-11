@@ -2,8 +2,12 @@ import axios, { isCancel, AxiosError } from 'axios';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-import { inputValue, observer, targetForObservVar } from './index.js';
-
+import {
+  inputValue,
+  currentPage,
+  observer,
+  targetForObservVar,
+} from './index.js';
 // Описаний в документації
 import SimpleLightbox from 'simplelightbox';
 // Додатковий імпорт стилів
@@ -18,31 +22,30 @@ const loaderVar = document.querySelector('.loader');
 async function fetchImages(inputValue, page = 1) {
   loaderVar.removeAttribute('hidden');
   const responseImg = await axios.get(
-    `${BASE_URL}/?key=${MY_KEY}&q=${inputValue}`,
+    `${BASE_URL}/?key=${MY_KEY}&q=${inputValue}&page=${currentPage}`,
     {
       params: {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: 'true',
         per_page: 40,
-        page: 1,
       },
     }
   );
-  if (responseImg.data.hits.length === 0) {
-    Notify.warning(
-      `🥺 Шкода, світлин не знайдено, змініть запит, спробуйте ще`
-    );
+  // console.log(inputValue, currentPage)
+  if (!responseImg.data.totalHits && responseImg.data.hits.length === 0) {
+    Notify.warning(`🥺 Шкода, світлин не знайдено спробуйте ще...`);
   }
-  // console.log(responseImg.data.hits,"*****хит*****");
+  console.log(responseImg, '*****хит*****');
   loaderVar.setAttribute('hidden', 'hidden');
 
   // сповіщення про кількість сторінок
   if (page === 1) {
     Notify.info(`🕵️‍♀️ УРА, Ви знайшли ${responseImg.data.totalHits} світлин`);
   }
+  // console.log("page", responseImg.data.total, "88888888", responseImg.data.hits);
 
-  return responseImg.data.hits;
+  return [responseImg.data.hits, responseImg.data.totalHits];
 }
 
 export { fetchImages, loaderVar };
