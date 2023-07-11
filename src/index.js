@@ -95,7 +95,7 @@ async function onObserv(entries, observer) {
             gallery.refresh();
             // console.log('обс', inputValue, currentPage, "555555", data[1]);
 
-            // ставимо умову щоб вимикати обсервер
+            // ставимо умову щоб вимикати обсерверa re[]
             if (currentPage === data[1]) {
               observer.unobserve(targetForObservVar);
             }

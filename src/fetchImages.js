@@ -33,16 +33,18 @@ async function fetchImages(inputValue, page = 1) {
     }
   );
   // console.log(inputValue, currentPage)
-  if (!responseImg.data.totalHits && responseImg.data.hits.length === 0) {
-    Notify.warning(`🥺 Шкода, світлин не знайдено спробуйте ще...`);
-  }
-  console.log(responseImg, '*****хит*****');
+  // console.log(responseImg, '*****resp*****');
   loaderVar.setAttribute('hidden', 'hidden');
 
   // сповіщення про кількість сторінок
-  if (page === 1) {
+  if (page === 1 && responseImg.data.hits.length !== 0) {
     Notify.info(`🕵️‍♀️ УРА, Ви знайшли ${responseImg.data.totalHits} світлин`);
   }
+  // сповіщення відсутність
+  if (responseImg.data.hits.length === 0 && page === 1) {
+    Notify.warning(`🥺 Шкода, світлин не знайдено...`);
+  }
+
   // console.log("page", responseImg.data.total, "88888888", responseImg.data.hits);
 
   return [responseImg.data.hits, responseImg.data.totalHits];
