@@ -48,7 +48,8 @@ async function submiterF(event) {
     return;
   }
   galeryVar.innerHTML = '';
-  // console.log(inputValue);
+  currentPage = 1;
+  console.log(inputValue, currentPage);
 
   // виклик функції запиту
   const fetch = await fetchImages(inputValue, currentPage)
