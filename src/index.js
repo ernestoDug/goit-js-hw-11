@@ -95,10 +95,16 @@ async function onObserv(entries, observer) {
             // метод бібліотеки руйнування лайтбоксу
             gallery.refresh();
             // console.log('обс', inputValue, currentPage, "555555", data[1]);
-
+            console.log(currentPage);
+            const pageFin = Math.ceil(data[1] / 40);
             // ставимо умову щоб вимикати обсерверa re[]
-            if (currentPage === data[1]) {
+            console.log(pageFin, 'finP');
+            console.log(currentPage, 'curP');
+
+            if (currentPage === pageFin) {
+              console.log('stopOBS');
               observer.unobserve(targetForObservVar);
+              Notify.warning(`😒 Нажаль пошук закінчено!!!`);
             }
           })
           .catch(error => Notify.warning(`😒 Сталася помилка !!!!!!!!!!!!!!`));
